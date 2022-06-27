@@ -1,23 +1,29 @@
 import React, {useEffect} from "react";
 import {Form, Button, Container, Row, Col, Card} from "react-bootstrap";
 import {useForm, Controller} from "react-hook-form";
-import {login} from "../services/auth.service";
+import {getToken, login} from "../services/auth.service";
 import {displayErrors} from "../helpers/errors";
+import { useHistory } from "react-router-dom";
 
 export default function Login() {
     const {setError, handleSubmit, control, reset, formState: {errors}, getValues} = useForm();
+    let history = useHistory();
+
+    useEffect(() => {
+        console.log('Login -> getToken() ', getToken());
+    }, []);
 
     const onSubmit = data => {
         const { email, password } = data;
         // console.log(data);
-        return login(email, password).then(console.log).catch(console.log);
+        return login(email, password).then(
+            () => {
+                history.push("/symptoms");
+                // window.location.reload();
+            }
+        ).catch(error =>
+            console.log(error));
     }
-
-    // const onLogin = () => {
-    //     getToken("berriel@gmail.com", "n4Z8Ckj5W7Pys2BQa")
-    // }
-    //
-    // useEffect(() => onLogin, []);
 
     return (
         // <Form onSubmit={handleSubmit(onSubmit)}>

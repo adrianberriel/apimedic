@@ -21,8 +21,11 @@ export const login = (username, password) => {
             if (response.data.Token) {
                 localStorage.setItem("token", JSON.stringify(response.data.Token));
             }
-
             return response.data;
         })
         .catch(error => alert(error));
-}/**/
+}
+
+export const getToken = () => {
+    return JSON.parse(localStorage.getItem("token"));
+}
