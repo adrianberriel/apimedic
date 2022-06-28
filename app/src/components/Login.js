@@ -26,12 +26,6 @@ export default function Login() {
     }
 
     return (
-        // <Form onSubmit={handleSubmit(onSubmit)}>
-        //     <Input {...register("firstName", {required: true, maxLength: 20})} />
-        //     <Input {...register("lastName", {pattern: /^[A-Za-z]+$/i})} />
-        //     <Input type="number" {...register("age", {min: 18, max: 99})} />
-        //     <Input type="submit"/>
-        // </Form>
         <Container>
             <Row>
                 <Col>
@@ -71,20 +65,9 @@ export default function Login() {
                                         {errors.password?.message}
                                     </Form.Control.Feedback>
                                 </Form.Group>
-                                {/*<Form.Group className="mb-3" controlId="password">*/}
-                                {/*<Controller control={control}*/}
-                                {/*            render={({field: {ref}, formState}) => (*/}
-                                {/*                <Button type="submit" disabled={formState.isSubmitting}*/}
-                                {/*                        className="btn btn-primary">*/}
-                                {/*                    {formState.isSubmitting &&*/}
-                                {/*                        <span className="spinner-border spinner-border-sm mr-1"/>}*/}
-                                {/*                    Save*/}
-                                {/*                </Button>*/}
-                                {/*                // <div></div>*/}
-                                {/*            )}*/}
-                                {/*/>*/}
-                                {/*</Form.Group>*/}
-                                <input type="submit" />
+                                <Button variant="primary" type="submit">
+                                    Login
+                                </Button>
                             </Form>
                         </Card.Body>
                     </Card>

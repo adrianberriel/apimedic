@@ -1,44 +1,47 @@
 import {useEffect, useState} from "react";
-import {getToken} from "../services/auth.service";
 import {getSymptoms} from "../services/diagnosis.service";
-
-// TODO get token
-
-// const config = {
-//     method: 'get',
-//     url: 'https://sandbox-healthservice.priaid.ch/symptoms?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImJlcnJpZWxAZ21haWwuY29tIiwicm9sZSI6IlVzZXIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiIxMDg2MCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAyMi0wNi0yNiIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNjU2MjkyNDU0LCJuYmYiOjE2NTYyODUyNTR9.jXu3QbzkcldqogusR0dlJDNc5R89pSENVyzLvxqu-2c&format=json&language=en-gb',
-//     headers: {
-//         'Cookie': 'ASP.NET_SessionId=2zjognnho5fvya5ergmfeahc'
-//     }
-// };
+import {Card, Col, Container, Dropdown, DropdownButton, Row} from "react-bootstrap";
 
 export default function Symptoms() {
-    // useEffect(() => {
-    //     axios(config)
-    //         .then(function (response) {
-    //             setSymptoms(JSON.stringify(response.data));
-    //             console.log(symptoms);
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // }, []);
-
-    const [token, setToken] = useState("");
-    const [symptoms, setSymptoms] = useState([]);
+    const [symptomsList, setSymptomsList] = useState([]);
+    const [symptom, setSymptom] = useState();
 
     useEffect(() => {
-        setToken(getToken());
-        const res = getSymptoms(token);
-        console.log('res ', res)
-        setSymptoms(getSymptoms(token));
+        getSymptoms()
+            .then(res => {
+                    setSymptomsList(res.data);
+                },
+                error => {
+                    console.log("getSymptoms() error ", error)
+                });
+    }, []);
 
-
-    },[]);
+    const handleSelect = (e) => {
+        console.log(e);
+    }
 
     return (
-        <div>
-            {symptoms?.map(s => <div>{s}</div>)}
-        </div>
+        <Container>
+            <Row xs={2} className="justify-content-sm-center">
+                <Col>
+                    <Card>
+                        <Card.Header>
+                            Symptoms
+                        </Card.Header>
+                        <Card.Body>
+                            <DropdownButton
+                                id="symptoms-dropdown"
+                                title="Choose a symptom"
+                                onSelect={handleSelect}
+                            >
+                                {symptomsList?.map(s =>
+                                    <Dropdown.Item>{s.Name}</Dropdown.Item>
+                                )}
+                            </DropdownButton>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 };
