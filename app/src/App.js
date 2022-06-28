@@ -12,9 +12,7 @@ function App() {
         </div>
         <div className="container mt-3">
           <Switch>
-            {/*<Route exact path={["/", "/home"]} component={Home} />*/}
-            <Route exact path="/login" component={Login} />
-            {/*<Route exact path="/register" component={Register} />*/}
+            <Route exact path={["/", "/login"]} component={Login} />
             <Route exact path="/symptoms" component={Symptoms} />
             {/*<Route path="/user" component={BoardUser} />*/}
             {/*<Route path="/mod" component={BoardModerator} />*/}

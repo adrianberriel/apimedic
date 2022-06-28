@@ -22,10 +22,6 @@ export default function Symptoms() {
                 });
     }, []);
 
-    // const handleSelect = (e) => {
-    //     setSymptom(e)
-    // }
-
     const onSubmit = data => {
         console.log({data});
     }
@@ -42,15 +38,23 @@ export default function Symptoms() {
                             <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
                                 <Form.Group className="mb-3" controlId="formSymptom">
                                     <Form.Label>Symptom</Form.Label>
-                                    <DropdownButton
-                                        id="symptoms-dropdown"
-                                        title="Choose a symptom"
-                                        // onSelect={handleSelect}
-                                    >
-                                        {symptomsList?.map(s =>
-                                            <Dropdown.Item eventKey={s.ID}>{s.Name}</Dropdown.Item>
+                                    <Controller
+                                        control={control}
+                                        name="symptom"
+                                        defaultValue=""
+                                        render={({field: {onChange, onBlur, value, ref}}) => (
+                                            <DropdownButton
+                                                id="symptoms-dropdown"
+                                                title="Choose a symptom"
+                                                ref={ref}
+                                                onSelect={onChange}
+                                            >
+                                                {symptomsList?.map(s =>
+                                                    <Dropdown.Item key={s.ID} eventKey={s.ID}>{s.Name}</Dropdown.Item>
+                                                )}
+                                            </DropdownButton>
                                         )}
-                                    </DropdownButton>
+                                    />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formAge">
@@ -76,24 +80,41 @@ export default function Symptoms() {
                                     <Controller
                                         control={control}
                                         name="gender"
-                                        defaultValue=""
-                                        render={({field: {onChange, onBlur, value, ref}}) => (
-                                            <>
-                                                <Form.Check
-                                                    inline
-                                                    label="Male"
-                                                    name="gender"
-                                                    type="radio"
-                                                    id="radio-gender-male"
-                                                />
-                                                <Form.Check
-                                                    inline
-                                                    label="Female"
-                                                    name="gender"
-                                                    type="radio"
-                                                    id="radio-gender-female"
-                                                />
-                                            </>
+                                        render={({
+                                                     field: {onChange, onBlur, value, name, ref},
+                                                     fieldState: {invalid, isTouched, isDirty, error},
+                                                     formState,
+                                                 }) => (
+                                            <Form.Check
+                                                onBlur={onBlur} // notify when input is touched
+                                                onChange={onChange} // send value to hook form
+                                                ref={ref}
+                                                type="radio"
+                                                id="radio-gender-male"
+                                                value="male"
+                                                label="Male"
+                                                name={name}
+                                            />
+                                        )}
+                                    />
+                                    <Controller
+                                        control={control}
+                                        name="gender"
+                                        render={({
+                                                     field: {onChange, onBlur, value, name, ref},
+                                                     fieldState: {invalid, isTouched, isDirty, error},
+                                                     formState,
+                                                 }) => (
+                                            <Form.Check
+                                                onBlur={onBlur} // notify when input is touched
+                                                onChange={onChange} // send value to hook form
+                                                ref={ref}
+                                                type="radio"
+                                                id="radio-gender-female"
+                                                value="female"
+                                                label="Female"
+                                                name={name}
+                                            />
                                         )}
                                     />
                                 </Form.Group>

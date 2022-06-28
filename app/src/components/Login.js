@@ -27,7 +27,7 @@ export default function Login() {
 
     return (
         <Container>
-            <Row>
+            <Row xs={2} className="justify-content-sm-center">
                 <Col>
                     <Card>
                         <Card.Header>
