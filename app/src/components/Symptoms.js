@@ -24,11 +24,10 @@ export default function Symptoms() {
     const onSubmit = data => {
         const { symptom, year_of_birth, gender } = data;
         getDiagnosis(symptom, gender, year_of_birth)
-            .then(
-                () => {
-                    history.push("/diagnosis");
-                }
-            )
+            .then(res => {
+                console.log(res);
+                history.push("diagnosis", res.data);
+            })
             .catch(err => console.log(err));
         console.log({data});
     }

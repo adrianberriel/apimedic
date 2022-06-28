@@ -15,14 +15,12 @@ export default function Login() {
 
     const onSubmit = data => {
         const { email, password } = data;
-        // console.log(data);
-        return login(email, password).then(
-            () => {
+        return login(email, password)
+            .then(() => {
                 history.push("/symptoms");
                 // window.location.reload();
-            }
-        ).catch(error =>
-            console.log(error));
+            })
+            .catch(error => console.error(error));
     }
 
     return (
