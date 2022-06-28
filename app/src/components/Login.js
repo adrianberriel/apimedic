@@ -37,14 +37,20 @@ export default function Login() {
                             <Form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
                                 <Form.Group className="mb-3" controlId="formEmail">
                                     <Form.Label>Email</Form.Label>
-                                    <Controller control={control} name="email"
-                                                defaultValue=""
-                                                render={({field: {onChange, onBlur, value, ref}}) => (
-                                                    <Form.Control onChange={onChange} value={value} ref={ref}
-                                                                  type="email"
-                                                                  isInvalid={errors.email}
-                                                                  placeholder="Enter email"/>)}/>
-                                    <Form.Text className="text-muted">We need a valid email address.</Form.Text>
+                                    <Controller
+                                        control={control} name="email"
+                                        defaultValue=""
+                                        render={({field: {onChange, onBlur, value, ref}}) => (
+                                            <Form.Control
+                                                onChange={onChange}
+                                                value={value}
+                                                ref={ref}
+                                                type="email"
+                                                isInvalid={errors.email}
+                                                placeholder="Enter email"/>
+                                        )}
+                                    />
+                                    <Form.Text className="text-muted">Use berriel@gmail.com</Form.Text>
                                     <Form.Control.Feedback type="invalid">
                                         {errors.email?.message}
                                     </Form.Control.Feedback>
@@ -52,15 +58,21 @@ export default function Login() {
 
                                 <Form.Group className="mb-3" controlId="password">
                                     <Form.Label>Password</Form.Label>
-                                    <Controller control={control} name="password"
-                                                defaultValue=""
-                                                render={({field: {onChange, onBlur, value, ref}}) => (
-                                                    <Form.Control
-                                                        onChange={onChange} value={value} ref={ref} type="password"
-                                                        isInvalid={errors.password}
-                                                        placeholder="Enter password"/>
-                                                )}/>
-                                    <Form.Text className="text-muted">Don't forget it!!</Form.Text>
+                                    <Controller
+                                        control={control}
+                                        name="password"
+                                        defaultValue=""
+                                        render={({field: {onChange, onBlur, value, ref}}) => (
+                                            <Form.Control
+                                                onChange={onChange}
+                                                value={value}
+                                                ref={ref}
+                                                type="password"
+                                                isInvalid={errors.password}
+                                                placeholder="Enter password"/>
+                                        )}
+                                    />
+                                    <Form.Text className="text-muted">Use n4Z8Ckj5W7Pys2BQa</Form.Text>
                                     <Form.Control.Feedback type="invalid">
                                         {errors.password?.message}
                                     </Form.Control.Feedback>
