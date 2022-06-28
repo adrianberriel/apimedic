@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {getSymptoms} from "../services/diagnosis.service";
+import {getSymptoms, getDiagnosis} from "../services/diagnosis.service";
 import {Button, Card, Col, Container, Dropdown, DropdownButton, Form, Row} from "react-bootstrap";
 import {Controller, useForm} from "react-hook-form";
 import {useHistory} from "react-router-dom";
@@ -8,7 +8,6 @@ import './Symptoms.css';
 
 export default function Symptoms() {
     const [symptomsList, setSymptomsList] = useState([]);
-    const [symptom, setSymptom] = useState();
     const {setError, handleSubmit, control, reset, formState: {errors}, getValues} = useForm();
     let history = useHistory();
 
@@ -23,6 +22,14 @@ export default function Symptoms() {
     }, []);
 
     const onSubmit = data => {
+        const { symptom, year_of_birth, gender } = data;
+        getDiagnosis(symptom, gender, year_of_birth)
+            .then(
+                () => {
+                    history.push("/diagnosis");
+                }
+            )
+            .catch(err => console.log(err));
         console.log({data});
     }
 
@@ -57,11 +64,11 @@ export default function Symptoms() {
                                     />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formAge">
+                                <Form.Group className="mb-3" controlId="formYearOfBirth">
                                     <Form.Label>Age</Form.Label>
                                     <Controller
                                         control={control}
-                                        name="age"
+                                        name="year_of_birth"
                                         defaultValue=""
                                         render={({field: {onChange, onBlur, value, ref}}) => (
                                             <Form.Control
@@ -106,8 +113,8 @@ export default function Symptoms() {
                                                      formState,
                                                  }) => (
                                             <Form.Check
-                                                onBlur={onBlur} // notify when input is touched
-                                                onChange={onChange} // send value to hook form
+                                                onBlur={onBlur}
+                                                onChange={onChange}
                                                 ref={ref}
                                                 type="radio"
                                                 id="radio-gender-female"
